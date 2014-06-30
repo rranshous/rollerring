@@ -5,15 +5,21 @@ type = ARGV.shift
 POPULATION_SIZE = [ARGV.shift.to_i, 2].max
 RING_SIZE = [ARGV.shift.to_i, 3].max
 CYCLE_MULTIPLIER = [ARGV.shift.to_i, 1].max
-ring_engine = RingEngine.new(RING_SIZE * CYCLE_MULTIPLIER)
+FIRST_TESTS = 100
 
 tests = ARGV.map do |arg|
   input, expected = arg.split(':')
   input = input.split(',')
   expected = expected.split(',')
+  [input, expected]
+end.sort_by do |(input, expected)|
+  expected.length
+end.take(FIRST_TESTS).map do |(input, expected)|
   puts "input/expected: #{input}/#{expected}"
+  ring_engine = RingEngine.new(RING_SIZE * CYCLE_MULTIPLIER)
   SimpleTest.new(ring_engine, input, expected)
-end + [OutputTest.new, InputTest.new, EndTest.new]
+end + [OutputTest.new, InputTest.new, EndTest.new, PlaceTest.new,
+       ImmediateEndTest.new]
 
 
 test_set = TestSet.new tests

@@ -1,3 +1,4 @@
+require 'pry'
 class TestSet
 
   attr_accessor :tests

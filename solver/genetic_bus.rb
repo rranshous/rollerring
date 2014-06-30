@@ -16,7 +16,8 @@ class GeneticBus < RandomBus
       )
     end
     # inject rando
-    super()
+    diff = max_population - @passengers.length
+    @passengers += diff.times.map { birther.grow }
   end
 
   private

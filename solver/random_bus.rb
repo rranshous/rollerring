@@ -11,8 +11,7 @@ class RandomBus
   end
 
   def refill
-    diff = max_population - @passengers.length
-    @passengers = diff.times.map { birther.grow }
+    @passengers = max_population.times.map { birther.grow }
   end
 
   private

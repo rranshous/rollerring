@@ -37,3 +37,16 @@ class EndTest
     individual.include?('end')
   end
 end
+
+class PlaceTest
+  def passes? individual
+    individual.include?('place')
+  end
+end
+
+
+class ImmediateEndTest
+  def passes? individual
+    individual.first != 'end'
+  end
+end
