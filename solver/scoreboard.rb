@@ -20,12 +20,6 @@ class Scoreboard
     best = raw_scores.first
     worst = raw_scores.last
     puts "SCORES [#{raw_scores.length}]: #{raw_scores}"
-    if @best.nil? || @best[0] != best[0]
-      puts
-      puts "BEST: #{best[1]}" if best
-      puts "BEST: #{best[0]}"  unless best.nil?
-      puts "WORST: #{worst[0]}" unless worst.nil?
-    end
     if best.nil? || score <= best[0]
       @scores.add [score, individual]
       if raw_scores.length > @max_size

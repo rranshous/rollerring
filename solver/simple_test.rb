@@ -31,3 +31,9 @@ class InputTest
     individual.include?('input')
   end
 end
+
+class EndTest
+  def passes? individual
+    individual.include?('end')
+  end
+end

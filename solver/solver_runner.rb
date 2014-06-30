@@ -13,7 +13,7 @@ tests = ARGV.map do |arg|
   expected = expected.split(',')
   puts "input/expected: #{input}/#{expected}"
   SimpleTest.new(ring_engine, input, expected)
-end + [OutputTest.new, InputTest.new]
+end + [OutputTest.new, InputTest.new, EndTest.new]
 
 
 test_set = TestSet.new tests
