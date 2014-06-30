@@ -9,8 +9,8 @@ class GeneticBus < RandomBus
 
   def refill seed_individuals
     return super() if seed_individuals.length == 0
-    # leave one space for a rando
-    @passengers = (max_population - 1).times.map do
+    # leave 10% for randos
+    @passengers = (max_population * 0.9).to_i.times.map do
       mutator.mutate(
         mater.mate seed_individuals.sample, seed_individuals.sample
       )

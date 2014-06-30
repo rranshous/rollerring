@@ -18,7 +18,17 @@ class StreamSolver < BruteSolver
   end
 
   def repopulate
-    bus.refill scoreboard.scores.map(&:individual)
+    print '.'
+    bus.refill high_scores.map(&:individual)
+  end
+
+  def high_scores
+    scores = scoreboard.scores
+    if scores.length != 0
+      best = scores.first.score
+      scores = scores.select{ |s| s.score <= best }
+    end
+    scores
   end
 
 end

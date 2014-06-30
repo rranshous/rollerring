@@ -19,26 +19,22 @@ class Scoreboard
     raw_scores = @scores.to_a
     best = raw_scores.first
     worst = raw_scores.last
+    puts "SCORES [#{raw_scores.length}]: #{raw_scores}"
     if @best.nil? || @best[0] != best[0]
+      puts
+      puts "BEST: #{best[1]}" if best
       puts "BEST: #{best[0]}"  unless best.nil?
       puts "WORST: #{worst[0]}" unless worst.nil?
     end
-    if best.nil? || score >= best[0]
+    if best.nil? || score <= best[0]
       @scores.add [score, individual]
       if raw_scores.length > @max_size
         low_scorers = raw_scores.select{|s| s[0] == worst[0]}
-        @scores.delete low_scorers.sample 
+        @scores.delete low_scorers.sample
       end
     end
     @best = best
     @worst = worst
-  end
-
-  private
-
-  def average_score
-    sum = @scores.reduce(0) { |agg, (s,i)| agg + s }
-    sum.to_f / @scores.length
   end
 end
 
