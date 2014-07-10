@@ -14,4 +14,8 @@ class TestSet
   def failed_test_count individual
     tests.reject { |t| t.passes? individual }.length
   end
+
+  def score individual
+    tests.map { |t| t.score(individual) }.reduce(&:+)
+  end
 end

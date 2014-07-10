@@ -1,8 +1,10 @@
 require_relative 'test_set'
 
 describe TestSet do
-  let(:passing_test) { instance_double("SimpleTest", :passes? => true) }
-  let(:failing_test) { instance_double("SimpleTest", :passes? => false) }
+  let(:passing_test) { instance_double("SimpleTest", :passes? => true,
+                                                     :score => 1.2) }
+  let(:failing_test) { instance_double("SimpleTest", :passes? => false,
+                                                     :score => 0) }
   let(:individual) { double }
   let(:tests) { [ ] }
   subject { described_class.new tests }
@@ -23,6 +25,9 @@ describe TestSet do
     it 'returns the number of failed tests' do
       expect(subject.failed_test_count(individual)).to eq 1
     end
-  end
 
+    it 'can produce scores' do
+      expect(subject.score(individual)).to eq 1.2
+    end
+  end
 end

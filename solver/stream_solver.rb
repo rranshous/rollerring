@@ -12,8 +12,11 @@ class StreamSolver < BruteSolver
 
   def passes_tests? individual
     original_individual = individual.dup
+    # TODO: not re-run the individual for score and passed tests
     failed_tests = test_set.failed_test_count individual
-    scoreboard.add_score original_individual, failed_tests
+    score = test_set.score individual
+    puts "[F/S]: #{failed_tests} :: #{score}"
+    scoreboard.add_score original_individual, score
     failed_tests == 0
   end
 
@@ -30,5 +33,4 @@ class StreamSolver < BruteSolver
     end
     scores
   end
-
 end
