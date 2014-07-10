@@ -1,4 +1,5 @@
 require 'timeout'
+require 'pry'
 require 'pp'
 
 class Roller
@@ -13,6 +14,8 @@ class Roller
       divide: false,
       add: false,
       subtract: false,
+      gt: false,
+      lt: false,
       output: false,
       place: false
     }.update(action_states)
@@ -24,6 +27,8 @@ class Roller
       divide: :next_numeric,
       add: :next_numeric,
       subtract: :next_numeric,
+      gt: :next_numeric,
+      lt: :next_numeric,
       output: true,
       place: true
     }
@@ -38,12 +43,13 @@ class Roller
   end
 
   def run value, input_buffer, output_buffer
-    #puts "ACTIONS: #{@actions}"
-    return [value, @actions[:step]] if value == 'noop' 
+   # puts "ACTIONS: #{@actions}"
+    return [value, @actions[:step]] if value == 'noop'
     original_value = value
     @actions.each do |action, action_state|
       value, new_state = take_action(action, action_state, value,
                                      input_buffer, output_buffer)
+      #puts "V: #{value} :: N: #{new_state}"
       @actions[action] = new_state
     end
     #puts "POSTACTIONS: #{@actions}"
@@ -86,6 +92,7 @@ class Roller
           [value, value]
 
         else
+          #puts action
           #puts "Action: #{action} :: #{action_state} :: #{value}"
           result = self.send(action.to_sym, action_state, value,
                              input_buffer, output_buffer)
@@ -148,6 +155,22 @@ class Roller
   def output _on, value, _input_buffer, output_buffer
     output_buffer << value
     [value, true]
+  end
+
+  def gt gt_value, value, _in, _out
+    if value.to_f > gt_value.to_f
+      [value, gt_value]
+    else
+      [0, gt_value]
+    end
+  end
+
+  def lt lt_value, value, _in, _out
+    if value.to_f < lt_value.to_f
+      [value, lt_value]
+    else
+      [0, lt_value]
+    end
   end
 
   def step current_step, value, *args

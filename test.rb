@@ -1,6 +1,7 @@
 require_relative 'lib'
 
 tests = [
+  ['output','','1','output|1|end'],
   ['simple','','1,2,3','output|1|2|3|end'],
   ['noop', '','1,2,3','output|1|noop|2|3|end'],
   ['step_simple','','1,2,3','step|2|9|output|8|1|7|2|6|3|5|end'],
@@ -12,7 +13,9 @@ tests = [
   ['place_simple','','2','place|add|1|1|9|fork|1|end|output'],
   ['input_simple','1,2,3','1,2,3','output|input|-9|-9|-9|end'],
   ['input_place','1,2,3,3','3,0,0,0,0,0,1,2,3',
-   'place|input|-9|-9|-9|output|fork|3|end|1']
+   'place|input|-9|-9|-9|output|fork|3|end|1'],
+  ['gt','','0,0,0,2','gt|1|output|-1|0|1|2|end'],
+  ['lt','','-1,0,0,0','lt|1|output|-1|0|1|2|end']
 ]
 
 tests.each do |(name, input, output, ring)|
@@ -23,7 +26,7 @@ tests.each do |(name, input, output, ring)|
   ring = ring.split('|')
   test_output = Ring.new(ring).run(0, 25, input)
   if test_output != output
-    raise "Failed [#{name}]| #{output} != #{test_output}"
+    raise "Failed [#{name}]| #{output} != #{test_output} :: #{ring}"
   end
   puts "ENDING: #{name}"
 end

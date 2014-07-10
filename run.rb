@@ -7,6 +7,6 @@ cycles = [ARGV.shift.to_i, 100].max
 
 
 puts "STARTING"
-puts "OUTPUT:"
 r = RingEngine.new(cycles).run(program, input).join(',')
-puts "#{r}"
+puts "OUTPUT: #{r}"
+puts "RESULT RING: #{program}"
