@@ -1,3 +1,5 @@
+require_relative 'roller'
+
 class Ring
   def initialize ring
     @ring = ring
