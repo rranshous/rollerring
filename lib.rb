@@ -17,7 +17,8 @@ class Roller
       gt: false,
       lt: false,
       output: false,
-      place: false
+      place: false,
+      toinput: false
     }.update(action_states)
 
     @action_defaults = {
@@ -30,7 +31,8 @@ class Roller
       gt: :next_numeric,
       lt: :next_numeric,
       output: true,
-      place: true
+      place: true,
+      toinput: true
     }
   end
 
@@ -179,6 +181,10 @@ class Roller
 
   def place to_place, value, *args
     [value, true]
+  end
+
+  def toinput _v, value, input, output
+    input << value
   end
 end
 

@@ -15,7 +15,8 @@ tests = [
   ['input_place','1,2,3,3','3,0,0,0,0,0,1,2,3',
    'place|input|-9|-9|-9|output|fork|3|end|1'],
   ['gt','','0,0,0,2','gt|1|output|-1|0|1|2|end'],
-  ['lt','','-1,0,0,0','lt|1|output|-1|0|1|2|end']
+  ['lt','','-1,0,0,0','lt|1|output|-1|0|1|2|end'],
+  ['toinput','1','1,1,1','output|input|toinput|0|0|0|end']
 ]
 
 tests.each do |(name, input, output, ring)|
