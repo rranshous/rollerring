@@ -1,5 +1,49 @@
+require 'yaml'
+
 class Roller
-  module Operations
+  class Operations
+
+    def initialize
+      @operations = :not_set
+      populate
+    end
+
+    def initial_values
+      {}.tap do |initial_hash|
+        @operations.each do |operation, opts|
+          initial_hash[operation.to_sym] = opts['initial']
+        end
+      end
+    end
+
+    def type_values
+      {}.tap do |type_hash|
+        @operations.each do |operation, opts|
+          type_hash[operation.to_sym] = opts['type']
+        end
+      end
+    end
+
+    def run_op op, *args
+      super if @operations == :not_set
+      puts "MISSING: #{op}" unless @operations.include?(op)
+      do_operation op.to_s, *args
+    end
+
+    private
+
+    def do_operation operation_name, register, value, input, output
+      puts "BINDING: #{binding}"
+      puts "EVAL: #{@operations[operation_name]['code']}"
+      eval @operations[operation_name]['code'], binding, operation_name, 0
+    end
+
+    def populate
+      @operations = YAML.load(
+                      File.read(
+                        File.join(File.dirname(__FILE__), 'operations.yaml')))
+      puts "operations: #{@operations}"
+    end
 
     def multiply multiplier, value, *args
       [value.to_i * multiplier.to_i, multiplier]

@@ -1,0 +1,55 @@
+---
+step:
+  initial: 1
+  type: numeric
+  code: '[value, register]'
+
+input:
+  initial: false
+  type: bool
+  code: '[input.shift || 0, true]'
+
+multiply:
+  initial: false
+  type: numeric
+  code: '[value.to_i * register.to_i, register]'
+
+divide:
+  initial: false
+  type: numeric
+  code: 'register.to_i == 0 ? [value, false] : [value.to_i / register.to_i, register]'
+
+add:
+  initial: false
+  type: numeric
+  code: '[value.to_i + register.to_i, register]'
+
+subtract:
+  initial: false
+  type: numeric
+  code: '[value.to_i - register.to_i, register]'
+
+gt:
+  initial: false
+  type: numeric
+  code: 'value.to_f > register.to_f ? [value, register] : [0, register]'
+
+lt:
+  initial: false
+  type: numeric
+  code: 'value.to_f < register.to_f ? [value, regieter] : [0, register]'
+
+output:
+  initial: false
+  type: numeric
+  code: 'output_buffer << value; [value, true]'
+
+place:
+  initial: false
+  type: numeric
+  code: '[value, true]'
+
+toinput:
+  initial: false
+  type: numeric
+  code: 'input << value; [value, true]'

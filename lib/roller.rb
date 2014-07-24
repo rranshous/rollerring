@@ -2,38 +2,22 @@ require_relative 'roller/operations'
 
 class Roller
 
-  include Roller::Operations
-
   def initialize action_states={}
 
-    # order matters
-    @actions = {
-      step: 1,
-      input: false,
-      multiply: false,
-      divide: false,
-      add: false,
-      subtract: false,
-      gt: false,
-      lt: false,
-      output: false,
-      place: false,
-      toinput: false
-    }.update(action_states)
+    @operations = Roller::Operations.new
 
-    @action_defaults = {
-      step: :next_numeric,
-      input: true,
-      multiply: :next_numeric,
-      divide: :next_numeric,
-      add: :next_numeric,
-      subtract: :next_numeric,
-      gt: :next_numeric,
-      lt: :next_numeric,
-      output: true,
-      place: true,
-      toinput: true
-    }
+    @actions = @operations.initial_values.update(action_states)
+    puts "ACTIONS: #{@actions}"
+    @action_defaults = Hash[@operations.type_values.to_a.map do |op, value|
+      [op, case value
+           when 'numeric'
+             :next_numeric
+           when 'bool'
+             true
+           end
+      ]
+    end]
+    puts "DEFAULTS: #{@action_defaults}"
   end
 
   def dump_state
@@ -96,9 +80,10 @@ class Roller
         else
           #puts action
           #puts "Action: #{action} :: #{action_state} :: #{value}"
-          result = self.send(action.to_sym, action_state, value,
-                             input_buffer, output_buffer)
+          result = @operations.run_op(action.to_sym, action_state, value,
+                                     input_buffer, output_buffer)
           # limit the number's max size
+          puts "RESULT: #{result}"
           case result[0]
           when Integer, Float
             [[-99999999, [99999999, result[0]].min].max, result[1]]
