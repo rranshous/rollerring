@@ -7,7 +7,7 @@ step:
 input:
   initial: false
   type: bool
-  code: '[input.shift || 0, true]'
+  code: '[input_buffer.shift || 0, true]'
 
 multiply:
   initial: false
@@ -37,19 +37,19 @@ gt:
 lt:
   initial: false
   type: numeric
-  code: 'value.to_f < register.to_f ? [value, regieter] : [0, register]'
+  code: 'value.to_f < register.to_f ? [value, register] : [0, register]'
 
 output:
   initial: false
-  type: numeric
+  type: bool
   code: 'output_buffer << value; [value, true]'
 
 place:
   initial: false
-  type: numeric
+  type: bool
   code: '[value, true]'
 
 toinput:
   initial: false
-  type: numeric
-  code: 'input << value; [value, true]'
+  type: bool
+  code: 'input_buffer << value; [value, true]'

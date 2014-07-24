@@ -23,11 +23,14 @@ tests.each do |(name, input, output, ring)|
   puts
   puts "STARTING: #{name}"
   output = output.split(',')
+  original_output = output.dup
   input = input.split(',')
+  original_input = input.dup
   ring = ring.split('|')
+  original_ring = ring.dup
   test_output = Ring.new(ring).run(0, 25, input)
   if test_output != output
-    raise "Failed [#{name}]| #{output} != #{test_output} :: #{ring}"
+    raise "Failed [#{name}]| #{original_output} != #{test_output} :: [#{original_input}] #{original_ring}"
   end
   puts "ENDING: #{name}"
 end

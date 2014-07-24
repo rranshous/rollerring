@@ -7,7 +7,7 @@ class Roller
     @operations = Roller::Operations.new
 
     @actions = @operations.initial_values.update(action_states)
-    puts "ACTIONS: #{@actions}"
+    #puts "ACTIONS: #{@actions}"
     @action_defaults = Hash[@operations.type_values.to_a.map do |op, value|
       [op, case value
            when 'numeric'
@@ -17,7 +17,7 @@ class Roller
            end
       ]
     end]
-    puts "DEFAULTS: #{@action_defaults}"
+    #puts "DEFAULTS: #{@action_defaults}"
   end
 
   def dump_state
@@ -29,6 +29,7 @@ class Roller
   end
 
   def run value, input_buffer, output_buffer
+    #puts "RUNNING: #{value}"
    # puts "ACTIONS: #{@actions}"
     return [value, @actions[:step]] if value == 'noop'
     original_value = value
@@ -61,10 +62,13 @@ class Roller
   def take_action action, action_state, value,
                   input_buffer, output_buffer
 
+    #puts "take action: #{action}"
+
     if action_state != false
 
       # if we hit an action that is on, than we reset it
       if value == action.to_s
+        #puts "reset"
         default = @action_defaults[action]
         if default == true
           default = false
@@ -74,7 +78,10 @@ class Roller
       # we don't take action against action values
       elsif is_numeric?(value)
 
+        #puts 'numeric'
+
         if action_state == :next_numeric
+          #puts 'setting register'
           [value, value]
 
         else
@@ -83,7 +90,7 @@ class Roller
           result = @operations.run_op(action.to_sym, action_state, value,
                                      input_buffer, output_buffer)
           # limit the number's max size
-          puts "RESULT: #{result}"
+          #puts "RESULT: #{result} :: #{result.class}"
           case result[0]
           when Integer, Float
             [[-99999999, [99999999, result[0]].min].max, result[1]]
@@ -94,14 +101,18 @@ class Roller
 
       # if it's not numeric, i don't care
       else
+        #puts 'dont care'
         [value, action_state]
       end
 
     # if the action is off but we hit that action
     # as an input than we want to flip it on
     elsif value == action.to_s
+      #puts 'turn on'
       default = @action_defaults[action]
+      #puts "default: #{default}"
       if default == :next_numeric and is_numeric?(value)
+        #puts 'setting numeric'
         [value, value]
       else
         [value, default]
