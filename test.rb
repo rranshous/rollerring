@@ -28,7 +28,7 @@ tests.each do |(name, input, output, ring)|
   original_input = input.dup
   ring = ring.split('|')
   original_ring = ring.dup
-  test_output = Ring.new(ring).run(0, 25, input)
+  test_output = Ring.new(ring).run(0, 100, input)
   if test_output != output
     raise "Failed [#{name}]| #{original_output} != #{test_output} :: [#{original_input}] #{original_ring}"
   end

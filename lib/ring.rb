@@ -21,11 +21,6 @@ class Ring
         index = @rollers[roller]
         cell_value = @ring[index]
         # if we hit the end cell, we're done
-        if cell_value == 'end'
-          #puts "ending roller #{roller_index}"
-          @rollers.delete(roller)
-          break
-        end
         #puts "Ring: #{@ring.join('|')}"
         #puts "IN: #{input_buffer}"
         #puts "OUT: #{output_buffer}"
@@ -45,8 +40,14 @@ class Ring
           end
         else
           new_cell_value, step = roller.run cell_value, input_buffer, output_buffer
+          if new_cell_value == 'end'
+            #puts "ending roller #{roller_index}"
+            @rollers.delete(roller)
+            break
+          end
           if new_cell_value != cell_value
             @ring[index] = new_cell_value
+            puts "RING: #{@ring}"
           end
         end
         if step == :next_numeric

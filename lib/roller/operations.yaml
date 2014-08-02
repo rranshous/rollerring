@@ -53,3 +53,13 @@ toinput:
   initial: false
   type: bool
   code: 'input_buffer << value; [value, true]'
+
+condend:
+  initial: false
+  type: bool
+  code: "value == '0' ? ['end', false] : [value, true]"
+
+end:
+  initial: false
+  type: bool
+  code: "['end', false]"
