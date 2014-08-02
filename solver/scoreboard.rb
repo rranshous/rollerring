@@ -18,16 +18,13 @@ class Scoreboard
     # TODO: non linear scaling
     raw_scores = @scores.to_a
     best = raw_scores.first
-    if !best.nil? && @best != best[0]
-      puts
-      puts "NEW BEST: #{best[0]}" unless best.nil?
-      @best = best[0]
-    end
     worst = raw_scores.last
     if best.nil? || score <= best[0]
+      if !best.nil? && score < best[0]
+        puts
+        puts "NEW [#{score}]: #{individual}"
+      end
       #puts "SCORES [#{raw_scores.length}]: #{raw_scores}"
-      puts
-      puts "NEW [#{score}]: #{individual}"
       @scores.add [score, individual]
       if raw_scores.length > @max_size
         low_scorers = raw_scores.select{|s| s[0] == worst[0]}

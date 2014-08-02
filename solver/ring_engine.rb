@@ -9,7 +9,6 @@ class RingEngine
   end
 end
 
-# TODO: cap cache size
 class CachingRingEngine < RingEngine
   def initialize cycles
     @cache = {}
@@ -18,6 +17,17 @@ class CachingRingEngine < RingEngine
 
   def run individual, input
     return @cache[individual] if @cache.include? individual
+    cull_cache
     @cache[individual] = super
+  end
+
+  private
+
+  def cull_cache
+    @cache.delete(@cache.keys.last) if @cache.length > max_size
+  end
+
+  def max_size
+    10
   end
 end
