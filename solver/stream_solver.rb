@@ -15,7 +15,6 @@ class StreamSolver < BruteSolver
     # TODO: not re-run the individual for score and passed tests
     failed_tests = test_set.failed_test_count individual
     score = test_set.score individual
-    puts "[F/S]: #{failed_tests} :: #{score}"
     scoreboard.add_score original_individual, score
     failed_tests == 0
   end

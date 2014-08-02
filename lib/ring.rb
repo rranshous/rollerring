@@ -8,6 +8,7 @@ class Ring
     }
     @steps = nil
     @max_rollers = 10
+    @last_run = nil
   end
 
   # TODO: break up so that search is not nec and can be externally stepped

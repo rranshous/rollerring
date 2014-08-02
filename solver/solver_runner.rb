@@ -8,6 +8,7 @@ CYCLE_MULTIPLIER = [ARGV.shift.to_i, 1].max
 FIRST_TESTS = 100
 
 scorer = Scorer
+ring_engine = CachingRingEngine.new(RING_SIZE * CYCLE_MULTIPLIER)
 tests = ARGV.map do |arg|
   input, expected = arg.split(':')
   input = input.split(',')
@@ -17,7 +18,6 @@ end.sort_by do |(input, expected)|
   expected.length
 end.take(FIRST_TESTS).map do |(input, expected)|
   puts "input/expected: #{input}/#{expected}"
-  ring_engine = RingEngine.new(RING_SIZE * CYCLE_MULTIPLIER)
   SimpleTest.new(ring_engine, input, expected, scorer)
 end + [OutputTest.new, InputTest.new, EndTest.new, PlaceTest.new,
        ImmediateEndTest.new]

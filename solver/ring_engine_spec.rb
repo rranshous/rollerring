@@ -26,3 +26,22 @@ describe RingEngine do
   end
 end
 
+describe CachingRingEngine do
+  let(:individual) { [1] }
+  let(:input) { double }
+  let(:cycles) { 10 }
+
+  subject { described_class.new(cycles) }
+
+  it 'does not rerun individuals' do
+    expect(Ring).to receive(:new).with(individual).once { double(run: nil) }
+    subject.run individual, input
+    subject.run individual, input
+  end
+
+  it 'double runs result in the same output' do
+    allow(Ring).to receive(:new).with(individual).once { double(run: 'output') }
+    original_output = subject.run individual, input
+    expect(original_output).to eq subject.run(individual, input)
+  end
+end
