@@ -1,4 +1,6 @@
 ---
+
+
 step:
   initial: 1
   type: numeric
@@ -57,7 +59,7 @@ toinput:
 condend:
   initial: false
   type: bool
-  code: "value == '0' ? ['end', false] : [value, true]"
+  code: "puts value.to_s; value.to_s == '0' ? ['end', false] : [value, true]"
 
 end:
   initial: false

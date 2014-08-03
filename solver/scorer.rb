@@ -4,16 +4,13 @@ class Scorer
     tally = 0
     correct.zip(given).each do |c,o|
       if c == o
-        tally += 5
+        tally += 3
       elsif given.include?(c)
         tally += 1
       end
     end
+    tally -= (correct.length - given.length).abs
     tally
-  end
-
-  def self.max_score correct
-    correct.length * 5
   end
 end
 

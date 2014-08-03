@@ -16,7 +16,11 @@ tests = [
    'place|input|-9|-9|-9|output|fork|3|end|1'],
   ['gt','','0,0,0,2','gt|1|output|-1|0|1|2|end'],
   ['lt','','-1,0,0,0','lt|1|output|-1|0|1|2|end'],
-  ['toinput','1','1,1,1','output|input|toinput|0|0|0|end']
+  ['toinput','1','1,1,1','output|input|toinput|0|0|0|end'],
+  ['condend','','1,0','condend|output|1|0|1|end'],
+  ['condend_value','','1,0','condend|output|add|1|-1|0|1|end'],
+  ['loop','','1,1,1,1',
+   'step|1|output|1|output|place|add|-1|condend|4|condend|place|add|0|step|-15|-999']
 ]
 
 tests.each do |(name, input, output, ring)|
@@ -32,5 +36,5 @@ tests.each do |(name, input, output, ring)|
   if test_output != output
     raise "Failed [#{name}]| #{original_output} != #{test_output} :: [#{original_input}] #{original_ring}"
   end
-  puts "ENDING: #{name}"
+  puts "ENDING: #{name} :: #{input}"
 end
