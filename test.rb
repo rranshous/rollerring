@@ -20,7 +20,9 @@ tests = [
   ['condend','','1,0','condend|output|1|0|1|end'],
   ['condend_value','','1,0','condend|output|add|1|-1|0|1|end'],
   ['loop','','1,1,1,1',
-   'step|1|output|1|output|place|add|-1|condend|4|condend|place|add|0|step|-15|-999']
+   'step|1|output|1|output|place|add|-1|condend|4|condend|place|add|0|step|-15|-999'],
+  ['condoutput','','1,2','condoutput|0|1|2|0|end'],
+  ['condtoinput','','1,2','condtoinput|0|1|2|condtoinput|output|input|0|0|end']
 ]
 
 tests.each do |(name, input, output, ring)|

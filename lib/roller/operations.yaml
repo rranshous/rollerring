@@ -46,6 +46,11 @@ output:
   type: bool
   code: 'output_buffer << value; [value, true]'
 
+condoutput:
+  initial: false
+  type: bool
+  code: "value.to_s != '0' and output_buffer << value; [value, true]"
+
 place:
   initial: false
   type: bool
@@ -56,10 +61,15 @@ toinput:
   type: bool
   code: 'input_buffer << value; [value, true]'
 
+condtoinput:
+  initial: false
+  type: bool
+  code: "value.to_s != '0' and input_buffer << value; [value, true]"
+
 condend:
   initial: false
   type: bool
-  code: "puts value.to_s; value.to_s == '0' ? ['end', false] : [value, true]"
+  code: "value.to_s == '0' ? ['end', false] : [value, true]"
 
 end:
   initial: false
