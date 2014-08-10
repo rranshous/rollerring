@@ -47,7 +47,7 @@ class Ring
           end
           if new_cell_value != cell_value
             @ring[index] = new_cell_value
-            puts "RING: #{@ring}"
+            #puts "RING: #{@ring}"
           end
         end
         if step == :next_numeric
