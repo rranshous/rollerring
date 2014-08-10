@@ -11,6 +11,11 @@ input:
   type: bool
   code: '[input_buffer.shift || 0, true]'
 
+#sticky:
+#  initial: false
+#  type: numeric
+#  code: '[register, register]'
+
 multiply:
   initial: false
   type: numeric

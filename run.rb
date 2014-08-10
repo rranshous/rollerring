@@ -2,7 +2,7 @@ require_relative 'solver/ring_engine'
 require 'pry'
 
 input = ARGV.shift.split(',')
-program = ARGV.shift.split('|')
+program = ARGV.shift.gsub(' ','|').split('|')
 cycles = [ARGV.shift.to_i, 100].max
 
 

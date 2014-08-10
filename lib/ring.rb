@@ -24,8 +24,14 @@ class Ring
         #puts "Ring: #{@ring.join('|')}"
         #puts "IN: #{input_buffer}"
         #puts "OUT: #{output_buffer}"
-        #puts "Cell [#{index}]: |#{cell_value}| " \
-        #     "<#{roller_index}|#{roller.object_id}> [#{cycle}]"
+        #puts "Cell [#{(index+1).to_s.ljust(3)}]: #{cell_value.ljust(8)} " \
+             "<#{roller_index}>" # [#{cycle}]"
+        if roller_index == 0
+          puts @ring.map{|v| v.center(5)}.join('|')
+        end
+        sizes = @ring.map{|v| v.center(5).length + 1}
+        offset = (sizes.take(index).reduce(:+) || 0) + sizes[index] / 2 - 1
+        puts "#{(" " * (offset - 1))}[#{roller_index.to_s}]"
         if cell_value == 'fork'
           state = roller.dump_state
           step = state[:step]
@@ -36,7 +42,7 @@ class Ring
           if step != :next_numeric && @rollers.length < @max_rollers
             state[:step] = :next_numeric
             @rollers[Roller.new(state)] = (index+step.to_i).abs % @ring.length
-            #puts "NEW ROLLER: #{@rollers.values.last}"
+            puts "NEW ROLLER: #{@rollers.values.last}"
           end
         else
           new_cell_value, step = roller.run cell_value, input_buffer, output_buffer

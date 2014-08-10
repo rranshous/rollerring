@@ -5,6 +5,7 @@ tests = [
   ['simple','','1,2,3','output|1|2|3|end'],
   ['noop', '','1,2,3','output|1|noop|2|3|end'],
   ['step_simple','','1,2,3','step|2|9|output|8|1|7|2|6|3|5|end'],
+  ['step_single_step_reset','','','step|2|0|step|4|1|output|0|end'],
   ['fork_simple','','1,2,3','step|2|10|fork|9|1|output|1|2|3|end|7|6|end'],
   ['add_simple','','1,2,3','add|1|output|0|1|2|end'],
   ['subtract_simple','','9','subtract|1|output|10|end'],
@@ -20,9 +21,10 @@ tests = [
   ['condend','','1,0','condend|output|1|0|1|end'],
   ['condend_value','','1,0','condend|output|add|1|-1|0|1|end'],
   ['loop','','1,1,1,1',
-   'step|1|output|1|output|place|add|-1|condend|4|condend|place|add|0|step|-15|-999'],
+   'step|1|output|1|output|place|add|-1|condend|4|condend|place|add|0|step|-15|-999|-999|-999'],
   ['condoutput','','1,2','condoutput|0|1|2|0|end'],
-  ['condtoinput','','1,2','condtoinput|0|1|2|condtoinput|output|input|0|0|end']
+  ['condtoinput','','1,2','condtoinput|0|1|2|condtoinput|output|input|0|0|end'],
+  #['sticky','','2','sticky|1|add|0|output|0|end']
 ]
 
 tests.each do |(name, input, output, ring)|
@@ -38,5 +40,5 @@ tests.each do |(name, input, output, ring)|
   if test_output != output
     raise "Failed [#{name}]| #{original_output} != #{test_output} :: [#{original_input}] #{original_ring}"
   end
-  puts "ENDING: #{name} :: #{input}"
+  puts "ENDING: #{name} :: #{input} :: #{ring}"
 end
