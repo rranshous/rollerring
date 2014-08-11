@@ -1,8 +1,14 @@
 class Mater
 
   def self.mate i1, i2
-    #self.crossover i1, i2
-    self.uniform_crossover i1, i2
+    case rand(3)
+    when 0
+      [i1, i2].sample
+    when 1
+      self.uniform_crossover i1, i2
+    when 2
+      self.linear_mate i1, i2
+    end
   end
 
   def self.uniform_crossover i1, i2
@@ -32,13 +38,16 @@ class Mater
   end
 
   def self.crossover i1, i2
-    index = rand(i1.length)
-    parents = [i1, i2].sample(2) # randomize parent order
-    parents.first[0...index] + parents.last[index..-1]
+    p1, p2 = [i1, i2].sample(2)
+    index = rand(p1.length)
+    puts "LEN: #{p1.length} :: INDEX: #{index}"
+    puts "PARENTS: #{p1} :: #{p2}"
+    p1[0...index] + p2[([p2.length-1,index].min)...-1]
   end
 
   def self.linear_mate i1, i2
-    i1.zip(i2).map{ |t1,t2| [t1, t2].sample }
+    t = [i1.length, i2.length].min
+    i1.take(t).zip(i2.take(t)).map{ |t1,t2| [t1, t2].sample }
   end
 end
 

@@ -7,5 +7,9 @@ class RingGen
       end
     end
   end
+
+  def self.possible_values
+    Roller.new.possible_actions + (0..9).map(&:to_s)
+  end
 end
 
