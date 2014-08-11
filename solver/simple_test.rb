@@ -13,7 +13,7 @@ class SimpleTest
 
   def score individual
     output = ring_engine.run(individual, input)
-    -1 * scorer.score(expected_output, output)
+    scorer.score(expected_output, output)
   end
 
   private
