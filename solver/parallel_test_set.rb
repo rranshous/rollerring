@@ -1,5 +1,5 @@
 require_relative 'test_set'
-require 'json'
+require_relative '../lib/worker'
 
 class ParallelTestSet < TestSet
   def initialize tests
@@ -52,37 +52,5 @@ class ParallelTestSet < TestSet
     when 'score'
       test.score individual
     end
-  end
-end
-
-class Worker
-  def initialize &work
-    work
-    @input, output = IO.pipe
-    input, @output = IO.pipe
-    puts "FORKING"
-    @proc = fork do
-      @input.close
-      @output.close
-      loop do
-        encoded_data = input.readline
-        data = JSON.parse(encoded_data)
-        result = work.call(data)
-        encoded_result = JSON.dump(result)
-        output.puts(encoded_result)
-      end
-    end
-    Process.detach @proc
-    output.close
-    input.close
-    puts "DONE FORKING: #{@proc}"
-  end
-
-  def push input
-    @output.puts(input.to_json)
-  end
-
-  def pop
-    JSON.parse(@input.readline)
   end
 end

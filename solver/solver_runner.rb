@@ -34,13 +34,13 @@ puts "tests: #{tests.length}"
 if type == 'brute'
   puts "BRUTE"
   bus = RandomBus.new(birther, POPULATION_SIZE)
-  solver = BruteSolver.new test_set, bus
+  solver = BruteSolver.new(test_set, bus)
 elsif type.start_with?('genetic')
   mater = Mater
   mutator = Mutator
   scoreboard = Scoreboard.new POPULATION_SIZE/2
   bus = GeneticBus.new(birther, mater, mutator, POPULATION_SIZE)
-  solver = StreamSolver.new(test_set, bus, scoreboard)
+  solver = StreamSolver.include(ParallelSolver).new(test_set, bus, scoreboard)
 else
   puts "type not defined"
 end

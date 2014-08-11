@@ -7,6 +7,12 @@ class TestSet
     self.tests = tests
   end
 
+  def stats_for individual
+    { 'individual' => individual,
+      'passes_tests' => passes?(individual),
+      'score' => score(individual) }
+  end
+
   def passes? individual
     failed_test_count(individual) == 0
   end

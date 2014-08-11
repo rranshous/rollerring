@@ -8,6 +8,7 @@ class BruteSolver
     loop do
       solution = cycle_for_solution
       return solution if solution
+      repopulate
       yield if block_given?
     end
   end
@@ -16,21 +17,19 @@ class BruteSolver
   attr_accessor :test_set, :bus
 
   def cycle_for_solution
-    repopulate
-    each_individual do |individual|
-      return individual if passes_tests? individual
+    population_stats.each do |stat|
+      puts "STAT: #{stat}"
+      return stat[:individual] if stat[:passes_tests]
     end
     false
   end
 
-  def each_individual
-    bus.passengers.each do |individual|
-      yield individual
-    end
+  def population_stats
+    bus.passengers.map { |individual| stats_for individual }
   end
 
-  def passes_tests? individual
-    test_set.passes? individual
+  def stats_for individual
+    test_set.stats_for individual
   end
 
   def repopulate

@@ -10,13 +10,16 @@ class StreamSolver < BruteSolver
   private
   attr_accessor :scoreboard
 
-  def passes_tests? individual
-    original_individual = individual.dup
-    # TODO: not re-run the individual for score and passed tests
-    failed_tests = test_set.failed_test_count individual
-    score = test_set.score individual
-    scoreboard.add_score original_individual, score
-    failed_tests == 0
+  def cycle_for_solution
+    population_stats.each do |stat|
+      update_scoreboard stat
+      return stat['individual'] if stat['passes_tests']
+    end
+    false
+  end
+
+  def update_scoreboard stat
+    scoreboard.add_score stat['individual'], stat['score']
   end
 
   def repopulate
