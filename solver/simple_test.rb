@@ -33,7 +33,7 @@ class IntrospectionTest < SimpleTest
     raise NotImplimentedError
   end
   def score individual
-    return passes?(individual) ? -1 : 0
+    return passes?(individual) ? 0 : 1
   end
 end
 

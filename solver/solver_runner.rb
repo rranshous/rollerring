@@ -19,7 +19,7 @@ end.sort_by do |(input, expected)|
 end.take(FIRST_TESTS).map do |(input, expected)|
   puts "input/expected: #{input}/#{expected}"
   SimpleTest.new(ring_engine, input, expected, scorer)
-end + [OutputTest.new, InputTest.new, EndTest.new, # PlaceTest.new,
+end + [OutputTest.new, InputTest.new, # PlaceTest.new,
        ImmediateEndTest.new]
 
 
