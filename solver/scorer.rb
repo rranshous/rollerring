@@ -1,7 +1,12 @@
 class Scorer
   def self.score correct, given
+    return 999999 if given == []
+    correct = correct.dup
+    given = given.dup
     tally = 0
-    correct.zip(given).map do |c,g|
+    [given.length, correct.length].max.times.map do
+      c = correct.shift
+      g = given.shift
       if c == g
         0
       else

@@ -19,14 +19,15 @@ class Scoreboard
   def add_score individual, score
     # TODO: non linear scaling
     best = @scores.first
-    if best.nil? || score <= best
-      if !best.nil? && score < best
-        puts
-        puts "NEW [#{score}]: #{individual}"
+    worst = @scores.last
+    #if worst.nil? || score <= worst
+      if insert_score(individual, score)
+        if best.nil? || score <= best
+          puts "NEW [#{score}]: |#{individual.length}| #{individual.join('|')}"
+        end
+        delete_low_scorer
       end
-      insert_score individual, score
-      delete_low_scorer
-    end
+    #end
   end
 
   private
@@ -43,6 +44,7 @@ class Scoreboard
   end
 
   def insert_score individual, score
+    return false if @individuals.include?(individual)
     index = insert_index(score)
     @scores.insert(index, score)
     @individuals.insert(index, individual)

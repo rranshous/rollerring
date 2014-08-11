@@ -30,8 +30,7 @@ class StreamSolver < BruteSolver
   def high_scores
     scores = scoreboard.scores
     if scores.length != 0
-      best = scores.first.score
-      scores = scores.select{ |s| s.score <= best }
+      scores = scores[0..(scores.length * 0.20)]
     end
     scores
   end
