@@ -1,4 +1,5 @@
 class SimpleTest
+
   def initialize ring_engine, input, expected_output, scorer
     self.input = input
     self.expected_output = expected_output
@@ -6,19 +7,27 @@ class SimpleTest
     self.scorer = scorer
   end
 
-  def passes? individual
-    return false unless can_output?(individual) || expected_output.length == 0
-    expected_output == ring_engine.run(individual, input)
-  end
-
-  def score individual
-    output = ring_engine.run(individual, input)
-    scorer.score(expected_output, output)
+  def stats_for individual
+    output = run individual
+    { 'passes' => passes?(output),
+      'score' => score(output) }
   end
 
   private
 
   attr_accessor :input, :expected_output, :ring_engine, :scorer
+
+  def passes? output
+    expected_output == output
+  end
+
+  def score output
+    scorer.score(expected_output, output)
+  end
+
+  def run individual
+    ring_engine.run(individual, input)
+  end
 
   def can_output? individual
     individual.include?('output')

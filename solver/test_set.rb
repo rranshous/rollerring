@@ -8,20 +8,23 @@ class TestSet
   end
 
   def stats_for individual
+    stats = tests.map { |t| t.stats_for individual }
     { 'individual' => individual,
-      'passes_tests' => passes?(individual),
-      'score' => score(individual) }
+      'passes_tests' => passes?(stats),
+      'score' => score(stats) }
   end
 
-  def passes? individual
-    failed_test_count(individual) == 0
+  private
+
+  def passes? stats
+    failed_test_count(stats) == 0
   end
 
-  def failed_test_count individual
-    tests.reject { |t| t.passes? individual }.length
+  def failed_test_count stats
+    stats.reject { |s| s['passes'] }.length
   end
 
-  def score individual
-    tests.map { |t| t.score(individual) }.reduce(&:+)
+  def score stats
+    stats.map { |s| s['score'] }.reduce(&:+)
   end
 end
