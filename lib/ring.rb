@@ -11,8 +11,18 @@ class Ring
     @last_run = nil
   end
 
+  def run *args
+    Timeout::timeout(2) do
+      _run *args
+    end
+  rescue Timeout::Error
+    []
+  end
+
+  private
+
   # TODO: break up so that search is not nec and can be externally stepped
-  def run start=0, max_cycles=99999999, input_buffer=[], search=nil
+  def _run start=0, max_cycles=99999999, input_buffer=[], search=nil
     #puts "Running: #{@ring}"
     output_buffer = []
     (0..max_cycles).each do |cycle|
