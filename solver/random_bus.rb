@@ -1,5 +1,7 @@
 class RandomBus
 
+  attr_accessor :max_population
+
   def initialize birther, max_population
     self.birther = birther
     self.max_population = max_population
@@ -15,5 +17,5 @@ class RandomBus
   end
 
   private
-  attr_accessor :max_population, :birther
+  attr_accessor :birther
 end

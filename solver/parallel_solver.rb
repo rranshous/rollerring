@@ -7,13 +7,13 @@ module ParallelSolver
 
   def population_stats
     @workers ||= create_workers
-    bus.passengers.each_slice(60).map do |individuals|
+    bus.passengers.each_slice(bus.max_population).map do |individuals|
       r = Worker.map(@workers, individuals)
     end.flatten
   end
 
   def create_workers
-    60.times.map do
+    bus.max_population.times.map do
       Worker.new do |individual|
         stats_for individual
       end
