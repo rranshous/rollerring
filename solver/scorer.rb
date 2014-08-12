@@ -1,6 +1,6 @@
 class Scorer
   def self.score correct, given
-    return 999999 if given == []
+    return 999999 if given == [] && correct != []
     correct = correct.dup
     given = given.dup
     tally = 0
