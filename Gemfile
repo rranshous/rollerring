@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+gem 'msgpack'
 gem 'pry'
 gem 'rspec'
 gem 'binary_search'
