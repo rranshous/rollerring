@@ -41,8 +41,10 @@ class IntrospectionTest < SimpleTest
   def passes? individual
     raise NotImplimentedError
   end
-  def score individual
-    return passes?(individual) ? 0 : 1
+  def stats_for individual
+    pass = passes?(individual)
+    { 'passes' => pass,
+      'score' => pass ? 0 : 10 }
   end
 end
 

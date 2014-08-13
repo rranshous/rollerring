@@ -9,8 +9,10 @@ class Scorer
       g = given.shift
       if c == g
         0
-      else
+      elsif given.include?(c)
         1
+      else
+        2
       end
     end.reduce(&:+)
   end
