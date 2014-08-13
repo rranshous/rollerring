@@ -12,11 +12,7 @@ class Ring
   end
 
   def run *args
-    Timeout::timeout(2) do
-      _run *args
-    end
-  rescue Timeout::Error
-    []
+    _run *args
   end
 
   private
