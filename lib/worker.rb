@@ -25,9 +25,11 @@ class WorkerPool
         idle_workers.shift.push(work_queue.shift)
       end
       ready = @selector.select
-      finished_workers = ready.map { |m| m.value }
-      completed_work += finished_workers.map { |worker| worker.pop }
-      idle_workers += finished_workers
+      unless ready.nil?
+        finished_workers = ready.map { |m| m.value }
+        completed_work += finished_workers.map { |worker| worker.pop }
+        idle_workers += finished_workers
+      end
     end
 
     completed_work
