@@ -5,7 +5,7 @@ type = ARGV.shift
 POPULATION_SIZE = [ARGV.shift.to_i, 2].max
 RING_SIZE = [ARGV.shift.to_i, 3].max
 CYCLE_MULTIPLIER = [ARGV.shift.to_i, 1].max
-FIRST_TESTS = 100
+FIRST_TESTS = 1000
 
 scorer = Scorer
 ring_engine = CachingRingEngine.new(RING_SIZE * CYCLE_MULTIPLIER)
