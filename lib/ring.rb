@@ -1,5 +1,7 @@
 require_relative 'roller'
 
+MAX_OUTPUT = 100
+
 class Ring
   def initialize ring
     @ring = ring
@@ -71,7 +73,7 @@ class Ring
         @rollers[roller] = index
       end
     end
-    output_buffer.map(&:to_s)
+    output_buffer.take(MAX_OUTPUT).map(&:to_s)
   end
 end
 
